@@ -24,6 +24,7 @@ defusedxml==0.7.1
 et-xmlfile==1.1.0
 executing==2.0.0
 fastjsonschema==2.18.1
+fonttools==4.47.0
 fqdn==1.5.1
 idna==3.4
 ipykernel==6.25.2
@@ -46,6 +47,7 @@ jupyterlab==4.0.7
 jupyterlab-pygments==0.2.2
 jupyterlab_github==4.0.0
 jupyterlab_server==2.25.0
+kiwisolver==1.4.5
 markdown-it-py==3.0.0
 MarkupSafe==2.1.3
 matplotlib-inline==0.1.6
@@ -65,6 +67,7 @@ pandocfilters==1.5.0
 parso==0.8.3
 path==16.7.1
 pickleshare==0.7.5
+Pillow==10.1.0
 platformdirs==3.11.0
 poyo==0.5.0
 prometheus-client==0.17.1
@@ -73,11 +76,12 @@ psutil==5.9.6
 pure-eval==0.2.2
 pycparser==2.21
 Pygments==2.16.1
+pyparsing==3.1.1
 python-dateutil==2.8.2
 python-json-logger==2.0.7
 python-slugify==8.0.1
 pytz==2023.3.post1
-pywin32==306
+pypiwin32==306
 pywinpty==2.0.12
 PyYAML==6.0.1
 pyzmq==25.1.1
@@ -87,6 +91,7 @@ rfc3339-validator==0.1.4
 rfc3986-validator==0.1.1
 rich==13.6.0
 rpds-py==0.10.6
+scipy==1.11.4
 Send2Trash==1.8.2
 six==1.16.0
 sniffio==1.3.0
