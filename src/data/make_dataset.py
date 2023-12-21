@@ -12,14 +12,16 @@ def main(input_filepath, output_filepath):
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
+    path_to_raw_data = Path(input_filepath)
+    path_to_processed_data = Path(output_filepath)
+
     logger = logging.getLogger(__name__)
     logger.info('Preprocessing raw data')
 
-    logger.info(Path.joinpath(input_filepath, "Injection_wells.xlsx"))
-    df_inj = pd.read_excel(Path.joinpath(input_filepath, "Injection_wells.xlsx"))
+    df_inj = pd.read_excel(Path.joinpath(path_to_raw_data, "Injection_wells.xlsx"))
     df_inj['group'] = 'I'
 
-    df_prod = pd.read_excel(Path.joinpath(input_filepath, "Production_wells_train.xlsx"))
+    df_prod = pd.read_excel(Path.joinpath(path_to_raw_data, "Production_wells_train.xlsx"))
     df_prod['group'] = 'P'  
 
     df_prod["water"] = df_prod["Liquid production rate"] - df_prod["Oil production rate"]
@@ -31,15 +33,15 @@ def main(input_filepath, output_filepath):
               "FormationPressure" : "fp","BottomHolePressure" : "bhp", "Injectivity" : "water_inj", "Choke" : "choke"}
     df.rename(columns=rename_dict, inplace=True)
 
-    path = Path.joinpath(output_filepath, "well_data.csv")
+    path = Path.joinpath(path_to_processed_data, "well_data.csv")
     df.to_csv(path, index=False)
 
     # create coords dataframe
-    df_coords = pd.read_excel(Path.joinpath(input_filepath, "Well_coordinates.xlsx"))
+    df_coords = pd.read_excel(Path.joinpath(path_to_raw_data, "Well_coordinates.xlsx"))
     rename_dict = {"Well": "cat", "X coordinate": "x", "Y coordinate": "y"}
     df_coords.rename(columns=rename_dict, inplace=True)
 
-    path = Path.joinpath(output_filepath,"coords.csv")
+    path = Path.joinpath(path_to_processed_data,"coords.csv")
     df_coords.to_csv(path, index=False)
 
 
