@@ -15,6 +15,7 @@ def main(input_filepath, output_filepath):
     logger = logging.getLogger(__name__)
     logger.info('Preprocessing raw data')
 
+    logger.info(Path.joinpath(input_filepath, "Injection_wells.xlsx"))
     df_inj = pd.read_excel(Path.joinpath(input_filepath, "Injection_wells.xlsx"))
     df_inj['group'] = 'I'
 
