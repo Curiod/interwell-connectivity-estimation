@@ -17,13 +17,13 @@ HAS_CONDA=True
 endif
 
 #################################################################################
-# COMMANDS                                                                      #
+# 								 COMMANDS                                       #
 #################################################################################
 
 ## Install Python Dependencies
 requirements: test_environment
-	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
+	$(PYTHON_INTERPRETER) -m pip install -U pip flake8 
+	if [ -f requirements.txt ]; then $(PYTHON_INTERPRETER) -m pip install -r requirements.txt; fi
 
 ## Make Dataset
 data: requirements
