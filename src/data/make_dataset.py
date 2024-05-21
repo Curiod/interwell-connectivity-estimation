@@ -29,10 +29,21 @@ def main(input_filepath, output_filepath):
 
     df = pd.concat([df_prod, df_inj])
 
+    # rename columns
     rename_dict = {"Well": "cat", "Date": "date", "Oil production rate": "oil", "Liquid production rate": "liquid", 
               "FormationPressure" : "fp","BottomHolePressure" : "bhp", "Injectivity" : "water_inj", "Choke" : "choke"}
     df.rename(columns=rename_dict, inplace=True)
 
+    # fill nans
+    cats = df['cat'].unique()
+    groups = ['P', 'I']
+    for group in groups:
+        for cat in cats:
+            well = df.loc[(df['cat'] == cat) & (df['group'] == group)]
+            if (well.empty):
+                continue
+            df.loc[(df['cat'] == cat) & (df['group'] == group)] = fill_nan(well, group)
+            
     path = Path.joinpath(path_to_processed_data, "well_data.csv")
     df.to_csv(path, index=False)
 
@@ -44,6 +55,22 @@ def main(input_filepath, output_filepath):
     path = Path.joinpath(path_to_processed_data,"coords.csv")
     df_coords.to_csv(path, index=False)
 
+
+dict_fillna = {'P': ['bhp', 'fp'], 'I': ['choke', 'fp']}
+
+def fill_nan(df: pd.DataFrame, group) -> pd.DataFrame:
+    new_df = df.copy()
+    for col in dict_fillna.get(group):
+        series = new_df.loc[:, col]
+        ref = series.loc[series.first_valid_index()]
+        if np.isnan(ref) and (col == 'fp'):
+            print("cringe")
+        for i, val in series.items():
+            if np.isnan(val):
+                series.update(pd.Series([ref], index = [i]))
+            else:
+                ref = val
+    return new_df
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
